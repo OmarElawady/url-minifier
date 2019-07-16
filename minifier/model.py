@@ -42,5 +42,6 @@ def shortify(link):
     return new_link
 
 def get_link(shorted):
-    return get_data()['shorted']
+    return get_data()[shorted]
+
 
