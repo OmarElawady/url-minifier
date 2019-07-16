@@ -20,4 +20,4 @@ def forward(link):
     if link is None:
         abort(404)
     else:
-        redirect(link, code = 302)
+        return redirect(link, code = 302)
