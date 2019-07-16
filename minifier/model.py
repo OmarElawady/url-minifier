@@ -1,7 +1,7 @@
 import json
 from flask import request
 from os.path import exists
-
+data = {}
 def convert_char(num):
     if num < 10:
         print(ord('0') + num)
@@ -24,26 +24,13 @@ def create_if_doesnt_exist():
         fd.write('{}')
         fd.close()
 
-def get_data():
-    create_if_doesnt_exist()
-    with open('minifier/data.json', 'r') as fd:
-        return json.loads(fd.read())
-
-def set_data(d):
-    with open('minifier/data.json', 'w') as fd:
-        fd.write(json.dumps(d))
-    
-
 def shortify(link):
-    d = get_data()
-    shortened = convert_num(len(d) + 1)
+    shortened = convert_num(len(data) + 1)
     new_link = 'http://' + request.host + '/' + shortened
-    d[shortened] = link
-    set_data(d)
+    data[shortened] = link
     return new_link
 
 def get_link(shorted):
-    data = get_data()
     if shorted in data:
         return data[shorted]
     else:
