@@ -36,7 +36,7 @@ def set_data(d):
 def shortify(link):
     d = get_data()
     shortened = convert_num(len(d) + 1)
-    new_link = 'http://127.0.0.1:5000/' + shortened
+    new_link = 'http://' + request.host + '/' + shortened
     d[shortened] = link
     set_data(d)
     return new_link
