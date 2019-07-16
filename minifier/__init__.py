@@ -1,5 +1,5 @@
 from flask import Flask, redirect, request
-from model import get_link, shortify
+from minifier.model import get_link, shortify
 from codra import Template
 
 app = Flask(__name__)
