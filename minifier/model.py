@@ -1,4 +1,5 @@
 import json
+from flask import request
 from os.path import exists
 
 def convert_char(num):
