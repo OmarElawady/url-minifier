@@ -1,4 +1,6 @@
-import redis
+import json
+from os.path import exists
+
 def convert_char(num):
     if num < 10:
         print(ord('0') + num)
@@ -15,14 +17,30 @@ def convert_num(num):
         num = num // base
     return string
 
+def create_if_doesnt_exist():
+    if not exists('minifier/data.json'):
+        fd = open('minifier/data.json', 'w+')
+        fd.write('{}')
+        fd.close()
+
+def get_data():
+    create_if_doesnt_exist()
+    with open('minifier/data.json', 'r') as fd:
+        return json.loads(fd.read())
+
+def set_data(d):
+    with open('minifier/data.json', 'w') as fd:
+        fd.write(json.dumps(d))
+    
+
 def shortify(link):
-    r = redis.Redis()
-    shortened = convert_num(r.hlen('links') + 1)
+    d = get_data()
+    shortened = convert_num(len(d) + 1)
     new_link = 'http://127.0.0.1:5000/' + shortened
-    r.hset('links', shortened, link)
+    d[shortened] = link
+    set_data(d)
     return new_link
 
 def get_link(shorted):
-    r = redis.Redis()
-    return r.hget('links', shorted)
+    return get_data()['shorted']
 
