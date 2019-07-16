@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, abort
 from minifier.model import get_link, shortify
 from codra import Template
 
@@ -16,4 +16,8 @@ def main():
 
 @app.route('/<link>')
 def forward(link):
-    return redirect(get_link(link), code = 302)
+    link = get_link(link)
+    if link is None:
+        abort(404)
+    else:
+        redirect(link, code = 302)
